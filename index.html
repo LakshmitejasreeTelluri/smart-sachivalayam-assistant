@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AP Sachivalayam Services</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f5f5f5;
+    text-align:center;
+}
+header{
+    background:#ffffff;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #ddd;
+}
+.back-btn{
+    display:none;
+    background:#f57c00;
+    color:#fff;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+    margin-right:15px;
+}
+.header-right{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+/* Microphone button */
+.mic-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 10px;
+    border-radius:6px;
+    background:#fff;
+    border:2px solid #f57c00;
+    color:#f57c00;
+    cursor:pointer;
+    font-weight:bold;
+}
+.mic-btn.listening{
+    background:linear-gradient(90deg,#f44336,#ff7043);
+    color:#fff;
+    border-color:#ff7043;
+}
+.role-select{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+.role-btn{
+    padding:18px 28px;
+    border-radius:10px;
+    border:2px solid #2196f3;
+    background:#fff;
+    color:#2196f3;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(33,150,243,0.08);
+    font-size:16px;
+}
+.role-btn.officer{
+    border-color:#ff9800;
+    color:#ff9800;
+}
+.officer-view{
+    display:none;
+    max-width:720px;
+    margin:30px auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.06);
+    text-align:left;
+}
+.officer-view .form-row{display:flex;gap:10px;align-items:center;margin:10px 0}
+.officer-view label{min-width:110px;font-weight:bold}
+.officer-auth{
+    display:none;
+    max-width:520px;
+    margin:20px auto;
+    background:#fff;
+    padding:18px;
+    border-radius:10px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.06);
+    text-align:left;
+}
+.officer-auth .row{display:flex;gap:8px;align-items:center;margin:8px 0}
+.officer-auth label{min-width:110px;font-weight:bold}
+.officer-auth input, .officer-auth select{flex:1;padding:8px;border:1px solid #ddd;border-radius:6px}
+.otp-note{font-size:13px;color:#666;margin-top:8px}
+.online{
+    color:green;
+    font-weight:bold;
+}
+.hero,.services,.details{
+    padding:40px;
+}
+.services,.details{
+    display:none;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+#langToggle{
+    padding:6px 12px;
+    font-size:12px;
+}
+.primary{
+    background:#f57c00;
+    color:#fff;
+}
+.outline{
+    background:#fff;
+    border:2px solid #f57c00;
+    color:#f57c00;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    max-width:1000px;
+    margin:auto;
+}
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    cursor:pointer;
+}
+.card:hover{
+    transform:scale(1.05);
+}
+
+.details{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    text-align:left;
+}
+
+ul{
+    line-height:1.8;
+}
+
+.progress-bar{
+    display:none;
+    margin:20px 0;
+    width:100%;
+    background:#e0e0e0;
+    border-radius:10px;
+    height:30px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    background:linear-gradient(90deg, #4caf50, #8bc34a);
+    height:100%;
+    width:0%;
+    transition:width 0.3s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.booking-section{
+    display:none;
+    margin:30px 0;
+    padding:20px;
+    background:#f0f8ff;
+    border-radius:10px;
+    border:2px solid #2196f3;
+}
+
+.quick-book-btn{
+    background:linear-gradient(135deg, #ff6b6b, #f57c00);
+    color:#fff;
+    padding:10px 16px;
+    border:none;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    margin-left:10px;
+}
+
+.quick-book-btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 4px 12px rgba(255,107,107,0.4);
+}
+
+.booking-cta{
+    background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color:#fff;
+    padding:20px;
+    border-radius:10px;
+    margin:20px 0;
+    text-align:center;
+    box-shadow:0 4px 15px rgba(102,126,234,0.3);
+}
+
+.booking-cta h3{
+    margin:0 0 10px 0;
+    font-size:18px;
+}
+
+.booking-cta p{
+    margin:0 0 15px 0;
+    font-size:14px;
+    opacity:0.9;
+}
+
+.booking-cta button{
+    background:#fff;
+    color:#667eea;
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.booking-cta button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(0,0,0,0.2);
+}
+
+.form-group{
+    margin:15px 0;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.form-group input,.form-group input[type="date"]{
+    width:100%;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.time-slots{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(100px, 1fr));
+    gap:10px;
+    margin:20px 0;
+}
+
+.time-slot{
+    padding:12px;
+    border:2px solid #ddd;
+    border-radius:6px;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    text-align:center;
+}
+
+.time-slot.available{
+    background:#e8f5e9;
+    border-color:#4caf50;
+}
+
+.time-slot.available:hover{
+    background:#c8e6c9;
+    transform:scale(1.05);
+}
+
+.time-slot.unavailable{
+    background:#ffebee;
+    border-color:#f44336;
+    cursor:not-allowed;
+    opacity:0.6;
+}
+
+.time-slot.selected{
+    background:#4caf50;
+    color:#fff;
+    border-color:#2e7d32;
+}
+
+.token-section{
+    display:none;
+    margin:20px 0;
+    padding:20px;
+    background:#fff3e0;
+    border-radius:10px;
+    border:2px solid #ff9800;
+    text-align:center;
+}
+
+.token-number{
+    font-size:48px;
+    font-weight:bold;
+    color:#ff9800;
+    margin:15px 0;
+    font-family:'Courier New', monospace;
+}
+
+.token-details{
+    text-align:left;
+    margin-top:15px;
+    font-size:14px;
+    background:#fff;
+    padding:15px;
+    border-radius:5px;
+}
+
+.appointments-view{
+    display:none;
+}
+
+.appointment-card{
+    background:#f0f8ff;
+    border:2px solid #2196f3;
+    border-radius:10px;
+    padding:20px;
+    margin:15px 0;
+    text-align:left;
+}
+
+.appointment-card h4{
+    color:#2196f3;
+    margin-top:0;
+    border-bottom:2px solid #2196f3;
+    padding-bottom:10px;
+}
+
+.appointment-card p{
+    margin:10px 0;
+    display:flex;
+    justify-content:space-between;
+}
+
+.no-appointments{
+    padding:40px 20px;
+    text-align:center;
+    color:#999;
+    font-size:16px;
+}
+
+.queue-status-view{
+    display:none;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.queue-header{
+    display:flex;
+    align-items:center;
+    margin-bottom:30px;
+    padding:20px;
+}
+
+.queue-container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.queue-info-card{
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    margin:20px 0;
+}
+
+.queue-current-token{
+    background:linear-gradient(135deg, #ff9800, #f57c00);
+    color:#fff;
+    padding:30px;
+    text-align:center;
+    border-radius:10px 10px 0 0;
+}
+
+.queue-current-token p{
+    margin:5px 0;
+    font-size:14px;
+}
+
+.token-display{
+    font-size:48px;
+    font-weight:bold;
+    font-family:'Courier New', monospace;
+    margin:10px 0;
+}
+
+.queue-details{
+    padding:20px;
+}
+
+.queue-detail-row{
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    border-bottom:1px solid #eee;
+    align-items:center;
+}
+
+.queue-detail-row:last-child{
+    border-bottom:none;
+}
+
+.queue-detail-label{
+    font-weight:bold;
+    color:#333;
+}
+
+.queue-detail-value{
+    color:#f57c00;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.queue-detail-value.time{
+    color:#4caf50;
+}
+
+.queue-status-badge{
+    background:#fff3cd;
+    border:2px solid #ffc107;
+    color:#856404;
+    padding:15px;
+    border-radius:8px;
+    margin:20px 0;
+    text-align:center;
+    font-weight:bold;
+}
+
+.user-info-badge{
+    background:#e3f2fd;
+    border:2px solid #2196f3;
+    padding:15px;
+    border-radius:8px;
+    margin:20px 0;
+    text-align:left;
+}
+
+.user-info-badge p{
+    margin:8px 0;
+}
+
+.user-info-badge strong{
+    color:#2196f3;
+}
+
+footer{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#fff;
+    border-top:1px solid #ddd;
+    display:flex;
+    justify-content:space-around;
+    padding:10px 0;
+}
+footer span{
+    cursor:pointer;
+}
+</style>
+</head>
+<!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
+<!-- Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB_oIsLPTrXwyACKKqJd60ZjDd0hioSnt0",
+    authDomain: "sachivalayam-webportal.firebaseapp.com",
+    projectId: "sachivalayam-webportal",
+    storageBucket: "sachivalayam-webportal.firebasestorage.app",
+    messagingSenderId: "178797643516",
+    appId: "1:178797643516:web:191f9c5b1ee4ff3fd8f979",
+    measurementId: "G-45XWJZP6Z8"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+<body>
+<header>
+<button id="backBtn" class="back-btn" onclick="handleBack()" title="Go back">← Back</button>
+<h3>AP Sachivalayam Services</h3>
+<div class="header-right">
+    <button id="micBtn" class="mic-btn" onclick="toggleMic()" title="Voice commands">🎤 <span id="micLabel">Mic</span></button>
+    <button id="langToggle" class="primary" onclick="toggleLanguage()">తెలుగు</button>
+</div>
+</header>
+
+<!-- Role selection: Officer or Citizen -->
+<div id="roleSelect" class="role-select">
+    <button class="role-btn citizen" onclick="selectCitizen()">Citizen</button>
+    <button class="role-btn officer" onclick="selectOfficer()">Officer</button>
+</div>
+
+<!-- Officer Token Generator View -->
+<div id="officerView" class="officer-view">
+    <h3>Officer — Generate Token</h3>
+    <div class="form-row">
+        <label>Service:</label>
+        <select id="officerServiceSelect"></select>
+    </div>
+    <div class="form-row">
+        <label>Name:</label>
+        <input id="officerName" type="text" placeholder="Enter name" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;">
+    </div>
+    <div class="form-row">
+        <label>Mobile:</label>
+        <input id="officerMobile" type="text" placeholder="Mobile (optional)" maxlength="10" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;">
+    </div>
+    <div class="form-row">
+        <label>Date:</label>
+        <input id="officerDate" type="date" style="padding:8px;border:1px solid #ddd;border-radius:6px;">
+    </div>
+    <div class="form-row">
+        <label>Time:</label>
+        <input id="officerTime" type="text" placeholder="e.g. 09:00 AM" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;">
+    </div>
+    <div style="margin-top:12px; display:flex; gap:10px;">
+        <button class="primary" onclick="officerGenerateToken()">Generate Token</button>
+        <button class="outline" onclick="backToRoleSelect()">Back</button>
+    </div>
+</div>
+
+    <div id="officerAuth" class="officer-auth" aria-hidden="true">
+        <h3>Officer Sign Up / Login</h3>
+        <div class="row">
+            <label for="officerAuthName">Name</label>
+            <input id="officerAuthName" placeholder="Full name" />
+        </div>
+        <div class="row">
+            <label for="officerAuthId">Officer ID</label>
+            <input id="officerAuthId" placeholder="Employee ID" />
+        </div>
+        <div class="row">
+            <label for="officerAuthMobile">Mobile</label>
+            <input id="officerAuthMobile" placeholder="10-digit mobile" />
+        </div>
+        <div class="row">
+            <label for="officerAuthRole">Role</label>
+            <select id="officerAuthRole">
+                <option value="officer">Officer</option>
+            </select>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+            <button id="officerSendOtp">Send OTP</button>
+            <input id="officerOtp" placeholder="Enter OTP" style="width:140px;padding:8px;border:1px solid #ddd;border-radius:6px" />
+            <button id="officerVerifyOtp">Verify</button>
+            <button id="officerAuthCancel" style="margin-left:auto;background:#eee">Cancel</button>
+        </div>
+        <div class="otp-note">Note: This demo simulates OTP. In production, use a server SMS gateway or Web OTP API on a secure origin.</div>
+    </div>
+
+<!-- HOME -->
+<div id="home" class="hero">
+<h1 data-en="Sachivalayam Services" data-te="సచివాలయం సేవలు">Sachivalayam Services</h1>
+<p style="color:#f57c00" data-en="Easy access to village services" data-te="గ్రామం సేవలకు సులభ ప్రవేశం">Easy access to village services</p>
+<p data-en="All government services in one place" data-te="ఒక స్థానంలో అన్ని ప్రభుత్వ సేవలు">All government services in one place</p>
+
+<!-- Booking CTA -->
+<div class="booking-cta">
+<h3 data-en="📅 Book an Appointment" data-te="📅 నియామకం బుక్ చేయండి">📅 Book an Appointment</h3>
+<p data-en="Select a service and book your appointment with available time slots" data-te="ఒక సేవ ఎంచుకుని అందుబాటులో ఉన్న సమయ స్లాట్‌లతో మీ నియామకం బుక్ చేయండి">Select a service and book your appointment with available time slots</p>
+<button class="primary" onclick="showServices()" data-en="Start Booking →" data-te="బుకింగ్ ప్రారంభించండి →">Start Booking →</button>
+</div>
+
+<button class="primary" onclick="showServices()" data-en="Get Started →" data-te="ప్రారంభించండి →">Get Started →</button>
+</div>
+
+<!-- SERVICES -->
+<div id="services" class="services">
+<h2 data-en="Select a Service" data-te="సేవ ఎంచుకోండి">Select a Service</h2>
+
+<div class="grid">
+<div class="card" onclick="showDetails('income')">📄 <span data-en="Income Certificate" data-te="ఆదాయ సర్టిఫికేట్">Income Certificate</span></div>
+<div class="card" onclick="showDetails('caste')">🧾 <span data-en="Caste Certificate" data-te="జాతి సర్టిఫికేట్">Caste Certificate</span></div>
+<div class="card" onclick="showDetails('residence')">🏠 <span data-en="Residence Certificate" data-te="నివాస సర్టిఫికేట్">Residence Certificate</span></div>
+<div class="card" onclick="showDetails('ews')">📊 <span data-en="EWS Certificate" data-te="EWS సర్టిఫికేట్">EWS Certificate</span></div>
+<div class="card" onclick="showDetails('birth')">👶 <span data-en="Birth Certificate" data-te="జన్మ సర్టిఫికేట్">Birth Certificate</span></div>
+<div class="card" onclick="showDetails('death')">⚰ <span data-en="Death Certificate" data-te="మరణం సర్టిఫికేట్">Death Certificate</span></div>
+<div class="card" onclick="showDetails('pension')">👵 <span data-en="YSR Pensions" data-te="YSR పెన్షన్‌లు">YSR Pensions</span></div>
+<div class="card" onclick="showDetails('ration')">🛒 <span data-en="Ration Card" data-te="రేషన్ కార్డ్">Ration Card</span></div>
+<div class="card" onclick="showDetails('land')">📍 <span data-en="Land / Property" data-te="భూమి / ఆస్తి">Land / Property</span></div>
+<div class="card" onclick="showDetails('mgnrega')">👷 <span data-en="MGNREGA Job Card" data-te="MGNREGA ఉద్యోగ కార్డ్">MGNREGA Job Card</span></div>
+</div>
+
+<br>
+<button class="outline" onclick="goHome()" data-en="← Home" data-te="← హోమ్">← Home</button>
+</div>
+
+<!-- DETAILS -->
+<div id="details" class="details">
+<h2 id="serviceTitle"></h2>
+
+<p style="text-align:center; color:#f57c00; margin:15px 0; font-weight:bold;" data-en="📋 Required Documents" data-te="📋 అవసరమైన డాక్యుమెంట్‌లు">📋 Required Documents</p>
+
+<!-- Progress Bar -->
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill">0%</div>
+</div>
+
+<!-- Document Checklist -->
+<ul id="serviceList"></ul>
+
+<!-- Done Button to show booking -->
+<button id="doneBtn" class="primary" onclick="showBooking()" style="display:none; margin:20px 0; width:100%; padding:15px; font-size:16;" data-en="✅ Proceed to Booking →" data-te="✅ బుకింగ్‌కు వెళ్లండి →">✅ Proceed to Booking →</button>
+
+<!-- Appointment Booking Section -->
+<div class="booking-section" id="bookingSection">
+<h3 style="color:#2196f3; margin-top:0;" data-en="📅 Book Your Appointment" data-te="📅 మీ నియామకం బుక్ చేయండి">📅 Book Your Appointment</h3>
+
+<div class="form-group">
+<label data-en="Your Name:" data-te="మీ పేరు:">Your Name:</label>
+<input type="text" id="userName" placeholder="Enter your full name">
+</div>
+
+<div class="form-group">
+<label data-en="Mobile Number:" data-te="మోబైల్ నంబర్:">Mobile Number:</label>
+<input type="text" id="userMobile" placeholder="Enter your mobile number" maxlength="10">
+</div>
+
+<div class="form-group">
+<label data-en="Select Date:" data-te="తేదీ ఎంచుకోండి:">Select Date:</label>
+<input type="date" id="appointmentDate" min="">
+</div>
+
+<h4 data-en="⏰ Available Time Slots:" data-te="⏰ అందుబాటులో ఉన్న సమయ స్లాట్‌లు:">⏰ Available Time Slots:</h4>
+<div class="time-slots" id="timeSlots"></div>
+
+<p style="color:#d32f2f; margin-top:10px; text-align:center;">
+<span data-en="🟢 Green = Available" data-te="🟢 ఆకుపచ్చ = అందుబాటులో ఉంది">🟢 Green = Available</span> | 
+<span data-en="🔴 Red = Unavailable" data-te="🔴 ఎరుపు = అందుబాటులో లేనిది">🔴 Red = Unavailable</span>
+</p>
+
+<button id="confirmAppointmentBtn" class="primary" onclick="confirmAppointment()" style="margin-top:20px; width:100%; padding:12px; font-size:16;" data-en="✅ Confirm & Get Token" data-te="✅ నిర్ధారించండి & టోకెన్ పొందండి">✅ Confirm & Get Token</button>
+</div>
+
+<!-- Token Section -->
+<div class="token-section" id="tokenSection">
+<h3 style="color:#ff9800; margin-top:0;" data-en="🎉 Appointment Confirmed!" data-te="🎉 నియామకం నిర్ధారించబడింది!">🎉 Appointment Confirmed!</h3>
+<p data-en="Your Unique Token Number:" data-te="మీ యూనిక్ టోకెన్ నంబర్:">Your Unique Token Number:</p>
+<div class="token-number" id="tokenNumber"></div>
+<div class="token-details" id="tokenDetails"></div>
+<button id="bookAnotherBtn" class="primary" onclick="backToServices()" style="margin-top:12px; width:100%;" data-en="📅 Book Another Service" data-te="📅 మరో సేవ బుక్ చేయండి">📅 Book Another Service</button>
+<button id="cancelAppointmentBtn" class="outline" onclick="cancelAppointment(document.getElementById('tokenNumber').innerText)" style="margin-top:12px; width:100%;" data-en="❌ Cancel Appointment" data-te="❌ నియామకాన్ని రద్దు చేయండి">❌ Cancel Appointment</button>
+</div>
+
+<button class="outline" onclick="backToServices()" id="backBtn" data-en="← Back to Services" data-te="← సేవలకు తిరిగి వెళ్లండి">← Back to Services</button>
+</div>
+
+<!-- APPOINTMENTS VIEW -->
+<div id="appointmentsView" class="appointments-view">
+<h2 data-en="📅 My Appointments" data-te="📅 నా నియామకాలు">📅 My Appointments</h2>
+<div id="appointmentsList"></div>
+<button class="outline" onclick="goHome()" data-en="← Home" data-te="← హోమ్">← Home</button>
+</div>
+
+<!-- QUEUE STATUS VIEW -->
+<div class="queue-status-view" id="queueStatusView">
+<div class="queue-header">
+<h2 style="flex:1; margin:0;" data-en="🎫 Queue Status" data-te="🎫 క్యూ స్థితి">🎫 Queue Status</h2>
+</div>
+
+<div class="queue-container">
+<div class="user-info-badge">
+<p><strong data-en="👤 User:" data-te="👤 విനియోగదారు:">👤 User:</strong> <span id="queueUserName">--</span></p>
+<p><strong data-en="📱 Mobile:" data-te="📱 మోబైల్:">📱 Mobile:</strong> <span id="queueUserMobile">--</span></p>
+<p><strong data-en="📋 Service:" data-te="📋 సేవ:">📋 Service:</strong> <span id="queueUserService">--</span></p>
+</div>
+
+<div class="queue-info-card">
+<div class="queue-current-token">
+<p data-en="Your Token" data-te="మీ టోకెన్">Your Token</p>
+<div class="token-display" id="queueCurrentToken">--</div>
+</div>
+
+<div class="queue-details">
+<div class="queue-detail-row">
+<span class="queue-detail-label" data-en="🎫 Your Position:" data-te="🎫 మీ స్థానం:">🎫 Your Position:</span>
+<span class="queue-detail-value" id="queuePosition">--</span>
+</div>
+
+<div class="queue-detail-row">
+<span class="queue-detail-label" data-en="👥 People Ahead:" data-te="👥 ముందు ఉన్న జనాలు:">👥 People Ahead:</span>
+<span class="queue-detail-value" id="peopleAhead">--</span>
+</div>
+
+<div class="queue-detail-row">
+<span class="queue-detail-label" data-en="⏱️ Estimated Wait Time:" data-te="⏱️ అంచన వేసిన నిరీక్షణ సమయం:">⏱️ Estimated Wait Time:</span>
+<span class="queue-detail-value time" id="estimatedTime">--</span>
+</div>
+
+<div class="queue-detail-row">
+<span class="queue-detail-label" data-en="🔄 Last Updated:" data-te="🔄 చివరిగా నవీకరించిన:">🔄 Last Updated:</span>
+<span style="color:#666; font-size:14px;" id="lastUpdated">--</span>
+</div>
+</div>
+</div>
+
+<div style="max-width:900px;margin:auto;padding:10px 20px;text-align:left;">
+  <div style="display:flex;gap:8px;align-items:center;justify-content:flex-start;">
+    <label style="font-weight:bold;margin-right:8px;" data-en="Current served:" data-te="ప్రస్తుతం సేవలు పొందిన సంఖ్య:">Current served:</label>
+    <input id="currentServedInput" type="number" min="0" style="width:80px;padding:6px;border:1px solid #ddd;border-radius:6px;" />
+    <button class="outline" onclick="updateQueueCount()" style="margin-left:8px;" data-en="Update Queue" data-te="క్యూ నవీకరించండి">Update Queue</button>
+    <span style="margin-left:20px;color:#666;" id="totalAppointmentsTodayLabel">Total today: --</span>
+  </div>
+</div>
+
+<div class="queue-status-badge" data-en="⏳ Check your position and estimated wait time above" data-te="⏳ పై మీ స్థానం మరియు అంచన సమయాన్ని తనిఖీ చేయండి">⏳ Check your position and estimated wait time above</div>
+
+<button class="outline" onclick="goHome()" style="margin-top:20px;" data-en="← Back to Home" data-te="← హోమ్‌కు తిరిగి వెళ్లండి">← Back to Home</button>
+</div>
+</div>
+
+<footer>
+<span onclick="goHome()" data-en="Home" data-te="హోమ్">Home</span>
+<span onclick="showServices()" data-en="Services" data-te="సేవలు">Services</span>
+<span onclick="showAppointments()" data-en="Appointments" data-te="నియామకాలు">Appointments</span>
+<span onclick="showQueueStatus()" data-en="Queue Status" data-te="క్యూ స్థితి">Queue Status</span>
+</footer>
+
+<script>
+let currentLanguage = 'en';
+let currentServiceKey = null;
+let checkedCount = 0;
+let selectedTimeSlot = null;
+let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+let navigationStack = ['role-select']; // Track navigation history
+
+const servicesData = {
+income:{titleEn:"Income Certificate (AP)",titleTe:"ఆదాయ సర్టిఫికేట్ (AP)",en:["Aadhaar Card","Ration Card","Address Proof","Income Proof (Salary / VRO Report)","Passport Photo","Mobile Number","Caste Certificate (students)","Bonafide / School ID","Issued by Tahsildar","Validity: 1 Year"],te:["ఆధార్ కార్డ్","రేషన్ కార్డ్","చిరునామా రుజువు","ఆదాయ రుజువు (జీతం / VRO నివేదిక)","పాస్‌పోర్ట్ ఫోటో","మొబైల్ నంబర్","జాతి సర్టిఫికేట్ (విద్యార్థులు)","బోనాఫైడ్ / స్కూల్ ID","తహసీల్‌దారు ద్వారా జారీ","వ్యవధిత్వ: 1 సంవత్సరం"]},
+caste:{titleEn:"Caste Certificate (SC / ST / BC)",titleTe:"జాతి సర్టిఫికేట్ (SC / ST / BC)",en:["Aadhaar Card","Ration Card","Address Proof","Parent's Caste Certificate","School Study Certificate","Self Declaration","Passport Photo","Issued by Tahsildar"],te:["ఆధార్ కార్డ్","రేషన్ కార్డ్","చిరునామా రుజువు","తల్లిదండ్రుల జాతి సర్టిఫికేట్","పాఠశాల అధ్యయన సర్టిఫికేట్","స్వీయ ప్రకటన","పాస్‌పోర్ట్ ఫోటో","తహసీల్‌దారు ద్వారా జారీ"]},
+residence:{titleEn:"Residence / Nativity Certificate",titleTe:"నివాస / స్థానిక సర్టిఫికేట్",en:["Aadhaar Card","Ration Card","Address Proof","House Tax Receipt","Study Certificate (students)","Passport Photo","VRO Local Enquiry"],te:["ఆధార్ కార్డ్","రేషన్ కార్డ్","చిరునామా రుజువు","ఇంటి ట్యాక్స్ రసీదు","అధ్యయన సర్టిఫికేట్ (విద్యార్థులు)","పాస్‌పోర్ట్ ఫోటో","VRO స్థానిక విచారణ"]},
+ews:{titleEn:"EWS Certificate",titleTe:"EWS సర్టిఫికేట్",en:["Aadhaar Card","Ration Card","Income Certificate","Property Declaration","Address Proof","Passport Photo"],te:["ఆధార్ కార్డ్","రేషన్ కార్డ్","ఆదాయ సర్టిఫికేట్","ఆస్తి ప్రకటన","చిరునామా రుజువు","పాస్‌పోర్ట్ ఫోటో"]},
+birth:{titleEn:"Birth Certificate",titleTe:"జన్మ సర్టిఫికేట్",en:["Hospital Birth Record","Parents Aadhaar","Marriage Certificate (optional)","Affidavit for late registration"],te:["ఆసుపత్రి జన్మ రికార్డు","తల్లిదండ్రుల ఆధార్","వివాహ సర్టిఫికేట్ (ఐచ్ఛికం)","విలంబ నమోదు కోసం శపథ"]},
+death:{titleEn:"Death Certificate",titleTe:"మరణం సర్టిఫికేట్",en:["Hospital Death Slip","Cremation / Burial Receipt","Aadhaar of Deceased","Aadhaar of Informant","Proof of Relationship"],te:["ఆసుపత్రి మరణ పర్చా","దహన / ఖననం రసీదు","ఆధార్ (వయస్సైన వ్యక్తి)","ఆధార్ (సమాచారదాత)","సంబంధం రుజువు"]},
+pension:{titleEn:"YSR Pension Schemes",titleTe:"YSR పెన్షన్ పథకాలు",en:["Aadhaar Card","Ration Card","Address Proof","Age Proof","Bank Account Details","Passport Photo","Mobile Number","Extra: Death Certificate (Widow)","Extra: Medical Certificate (Disabled)"],te:["ఆధార్ కార్డ్","రేషన్ కార్డ్","చిరునామా రుజువు","వయస్సు రుజువు","బ్యాంక్ ఖాతా వివరాలు","పాస్‌పోర్ట్ ఫోటో","మొబైల్ నంబర్","అదనం: మరణ సర్టిఫికేట్ (విధవ)","అదనం: వైద్య సర్టిఫికేట్ (వికలాంగ)"]},
+ration:{titleEn:"Ration Card Services",titleTe:"రేషన్ కార్డ్ సేవలు",en:["Aadhaar (All Family Members)","Address Proof","Existing Ration Card","Income Proof","Marriage Certificate","Birth Certificate","Deletion Certificate"],te:["ఆధార్ (అన్ని కుటుంబ సభ్యులు)","చిరునామా రుజువు","ప్రస్తుత రేషన్ కార్డ్","ఆదాయ రుజువు","వివాహ సర్టిఫికేట్","జన్మ సర్టిఫికేట్","తొలగింపు సర్టిఫికేట్"]},
+land:{titleEn:"Land / Property Services",titleTe:"భూమి / ఆస్తి సేవలు",en:["Aadhaar Card","Registered Sale / Gift Deed","Previous Pattadar Passbook","Encumbrance Certificate","Tax Receipt","Photographs"],te:["ఆధార్ కార్డ్","నమోదు చేసిన విక్రయ / గిఫ్ట్ డీడ్","మునుపటి పట్టదారి పాస్‌బుక్","అభిభవం సర్టిఫికేట్","ట్యాక్స్ రసీదు","ఫోటోగ్రాఫ్‌లు"]},
+mgnrega:{titleEn:"MGNREGA Job Card",titleTe:"MGNREGA ఉద్యోగ కార్డ్",en:["Aadhaar Card","Ration Card","Address Proof","Age Proof (18+)","Bank Account Details","Passport Photo"],te:["ఆధార్ కార్డ్","రేషన్ కార్డ్","చిరునామా రుజువు","వయస్సు రుజువు (18+)","బ్యాంక్ ఖాతా వివరాలు","పాస్‌పోర్ట్ ఫోటో"]}
+};
+
+const homeDiv = document.getElementById("home");
+const servicesDiv = document.getElementById("services");
+const detailsDiv = document.getElementById("details");
+const bookingSection = document.getElementById("bookingSection");
+const tokenSection = document.getElementById("tokenSection");
+const appointmentsView = document.getElementById("appointmentsView");
+const titleEl = document.getElementById("serviceTitle");
+const listEl = document.getElementById("serviceList");
+const progressBar = document.querySelector(".progress-bar");
+const progressFill = document.getElementById("progressFill");
+const doneBtn = document.getElementById("doneBtn");
+const langToggle = document.getElementById("langToggle");
+
+function toggleLanguage() {
+  currentLanguage = currentLanguage === 'en' ? 'te' : 'en';
+  langToggle.innerText = currentLanguage === 'en' ? 'తెలుగు' : 'English';
+  localStorage.setItem('selectedLanguage', currentLanguage);
+  updatePageLanguage();
+    const micLabel = document.getElementById('micLabel');
+    if(micLabel) micLabel.innerText = currentLanguage === 'en' ? 'Mic' : 'మైక్';
+}
+
+function updatePageLanguage() {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.innerText = currentLanguage === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-te');
+  });
+  if (detailsDiv.style.display !== 'none' && currentServiceKey) {
+    const data = servicesData[currentServiceKey];
+    titleEl.innerText = currentLanguage === 'en' ? data.titleEn : data.titleTe;
+    const list = currentLanguage === 'en' ? data.en : data.te;
+    listEl.innerHTML = list.map((item, i) => `<li><input type="checkbox" id="doc${i}" onchange="updateProgress()" style="margin-right:8px;">✔ ${item}</li>`).join("");
+  }
+}
+
+function updateBackButton(){
+    const backBtn = document.getElementById('backBtn');
+    if(!backBtn) return;
+    // Show back button unless we're on the role-select screen
+    if(document.getElementById('roleSelect').style.display === 'flex'){
+        backBtn.style.display = 'none';
+    } else {
+        backBtn.style.display = 'block';
+    }
+}
+
+function handleBack(){
+    // Determine where to go back based on which view is currently active
+    if(document.getElementById('officerAuth').style.display !== 'none'){
+        hideOfficerAuth();
+        document.getElementById('roleSelect').style.display = 'flex';
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('officerView').style.display !== 'none'){
+        backToRoleSelect();
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('queueStatusView').style.display !== 'none'){
+        goHome();
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('appointmentsView').style.display !== 'none'){
+        goHome();
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('tokenSection').style.display !== 'none'){
+        // If token is showing, go back to services
+        backToServices();
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('bookingSection').style.display !== 'none'){
+        // If booking is showing, go back to details
+        bookingSection.style.display = 'none';
+        tokenSection.style.display = 'none';
+        detailsDiv.style.display = 'block';
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('details').style.display !== 'none'){
+        showServices();
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('services').style.display !== 'none'){
+        goHome();
+        updateBackButton();
+        return;
+    }
+    if(document.getElementById('home').style.display !== 'none'){
+        document.getElementById('roleSelect').style.display = 'flex';
+        goHome();
+        updateBackButton();
+        return;
+    }
+}
+
+function showServices(){
+homeDiv.style.display="none";
+servicesDiv.style.display="block";
+detailsDiv.style.display="none";
+appointmentsView.style.display="none";
+document.getElementById("queueStatusView").style.display="none";
+updateBackButton();
+}
+
+function goHome(){
+homeDiv.style.display="block";
+servicesDiv.style.display="none";
+detailsDiv.style.display="none";
+appointmentsView.style.display="none";
+document.getElementById("queueStatusView").style.display="none";
+updateBackButton();
+}
+
+function showDetails(key){
+currentServiceKey = key;
+checkedCount = 0;
+selectedTimeSlot = null;
+servicesDiv.style.display="none";
+detailsDiv.style.display="block";
+appointmentsView.style.display="none";
+document.getElementById("queueStatusView").style.display="none";
+bookingSection.style.display="none";
+tokenSection.style.display="none";
+progressBar.style.display="none";
+doneBtn.style.display="none";
+updateBackButton();
+
+const data = servicesData[key];
+titleEl.innerText = currentLanguage === 'en' ? data.titleEn : data.titleTe;
+const list = currentLanguage === 'en' ? data.en : data.te;
+listEl.innerHTML = list.map((item, i) => `<li><input type="checkbox" id="doc${i}" onchange="updateProgress()" style="margin-right:8px;">✔ ${item}</li>`).join("");
+}
+
+function updateProgress(){
+const checkboxes = document.querySelectorAll("#serviceList input[type='checkbox']");
+checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+const totalCount = checkboxes.length;
+const percentage = Math.round((checkedCount / totalCount) * 100);
+
+progressBar.style.display = "block";
+progressFill.style.width = percentage + "%";
+progressFill.innerText = percentage + "%";
+
+if(checkedCount === totalCount && totalCount > 0){
+  doneBtn.style.display="block";
+}else{
+  doneBtn.style.display="none";
+}
+}
+
+function showBooking(){
+progressBar.style.display="none";
+doneBtn.style.display="none";
+bookingSection.style.display="block";
+tokenSection.style.display="none";
+initAppointmentForm();
+}
+
+function initAppointmentForm(){
+const today = new Date();
+const minDate = today.toISOString().split('T')[0];
+document.getElementById("appointmentDate").setAttribute("min", minDate);
+document.getElementById("appointmentDate").value = minDate;
+generateTimeSlots();
+document.getElementById("appointmentDate").addEventListener('change', generateTimeSlots);
+}
+
+function generateTimeSlots(){
+const selectedDate = document.getElementById("appointmentDate").value;
+if(!selectedDate) return;
+
+const date = new Date(selectedDate + 'T00:00:00');
+const dayOfWeek = date.getDay();
+
+const timeSlots = [
+  "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM",
+  "11:00 AM", "11:30 AM", "01:00 PM", "01:30 PM",
+  "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM"
+];
+
+// Sundays closed, otherwise specific times busy
+const unavailableSlots = (dayOfWeek === 0) ? timeSlots : ["01:00 PM", "02:00 PM"];
+
+const slotsHTML = timeSlots.map((time, index) => {
+  const isUnavailable = unavailableSlots.includes(time);
+  return `
+    <div class="time-slot ${isUnavailable ? 'unavailable' : 'available'}" 
+    onclick="${!isUnavailable ? `selectTimeSlot(this, '${time}')` : ''}" 
+    id="slot${index}"
+    style="cursor:${isUnavailable ? 'not-allowed' : 'pointer'}">
+    ${time}
+    </div>`;
+}).join("");
+
+document.getElementById("timeSlots").innerHTML = slotsHTML;
+selectedTimeSlot = null;
+}
+
+function selectTimeSlot(element, time){
+const slots = document.querySelectorAll(".time-slot");
+slots.forEach(slot => slot.classList.remove("selected"));
+element.classList.add("selected");
+selectedTimeSlot = time;
+// Visual feedback
+element.style.transform = "scale(1.1)";
+setTimeout(() => {
+  element.style.transform = "scale(1)";
+}, 200);
+}
+
+function confirmAppointment(){
+const name = document.getElementById("userName").value.trim();
+const mobile = document.getElementById("userMobile").value.trim();
+const date = document.getElementById("appointmentDate").value;
+
+if(!name){
+  alert(currentLanguage === 'en' ? "⚠️ Please enter your name" : "⚠️ దయచేసి మీ పేరు నమోదు చేయండి");
+  document.getElementById("userName").focus();
+  return;
+}
+if(!mobile || mobile.length !== 10 || isNaN(mobile)){
+  alert(currentLanguage === 'en' ? "⚠️ Please enter a valid 10-digit mobile number" : "⚠️ దయచేసి చెల్లుబాటు చేయు 10-సంఖ్య మోబైల్ నంబర్ నమోదు చేయండి");
+  document.getElementById("userMobile").focus();
+  return;
+}
+if(!date){
+  alert(currentLanguage === 'en' ? "⚠️ Please select a date" : "⚠️ దయచేసి తేదీ ఎంచుకోండి");
+  return;
+}
+if(!selectedTimeSlot){
+  alert(currentLanguage === 'en' ? "⚠️ Please select a time slot" : "⚠️ దయచేసి సమయ స్లాట్ ఎంచుకోండి");
+  return;
+}
+
+    // compute formatted date for counting
+    const dateObj = new Date(date);
+    const formattedDate = dateObj.toLocaleDateString('en-IN', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+    const position = appointments.filter(a => a.date === formattedDate).length + 1;
+    const token = generateToken(date, name);
+    displayToken(token, name, mobile, date, selectedTimeSlot, position);
+}
+
+function generateToken(date, name){
+const timestamp = new Date().getTime();
+const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase();
+const initials = name.split(' ').map(w => w[0]).join('').toUpperCase();
+const token = `${initials}-${randomStr}-${timestamp.toString().slice(-4)}`;
+return token;
+}
+
+function displayToken(token, name, mobile, date, time, position){
+    bookingSection.style.display = "none";
+    tokenSection.style.display = "block";
+    document.getElementById("tokenNumber").innerText = token;
+
+    const dateObj = new Date(date);
+    const formattedDate = dateObj.toLocaleDateString('en-IN', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    const bookedAtTime = new Date().toLocaleString('en-IN');
+    const serviceName = currentLanguage === 'en' ? servicesData[currentServiceKey].titleEn : servicesData[currentServiceKey].titleTe;
+
+    // if position not provided, compute from current appointments after filtering by date
+    let pos = position;
+    if(!pos){
+        pos = appointments.filter(a => a.date === formattedDate).length + 1;
+    }
+    const dailyCount = appointments.filter(a => a.date === formattedDate).length + 1;
+
+    const details = `
+        <p><strong>${currentLanguage === 'en' ? 'Service:' : 'సేవ:'}</strong> ${serviceName}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Name:' : 'పేరు:'}</strong> ${name}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Mobile:' : 'మోబైల్:'}</strong> ${mobile}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Date:' : 'తేదీ:'}</strong> ${formattedDate}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Time Slot:' : 'సమయ స్లాట్:'}</strong> ${time}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Queue Position:' : 'క్యూ పొజిషన్:'}</strong> ${pos}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Total Appointments Today:' : 'ఈ రోజు మొత్తం నియామకాలు:'}</strong> ${dailyCount}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Generated At:' : 'ఇది రూపొందించిన సమయం:'}</strong> ${bookedAtTime}</p>
+    `;
+    document.getElementById("tokenDetails").innerHTML = details;
+
+    const appointmentData = {
+        token: token,
+        service: serviceName,
+        name: name,
+        mobile: mobile,
+        date: formattedDate,
+        time: time,
+        bookedAt: bookedAtTime,
+        position: pos
+    };
+    appointments.push(appointmentData);
+    localStorage.setItem('appointments', JSON.stringify(appointments));
+
+    // Store for queue status display
+    localStorage.setItem('lastBookedMobile', mobile);
+    localStorage.setItem('lastBookedName', name);
+    localStorage.setItem('lastBookedService', serviceName);
+    localStorage.setItem('lastBookedToken', token);
+}
+
+function showAppointments(){
+homeDiv.style.display="none";
+servicesDiv.style.display="none";
+detailsDiv.style.display="none";
+appointmentsView.style.display="block";
+document.getElementById("queueStatusView").style.display="none";
+updateBackButton();
+
+const appointmentsList = document.getElementById("appointmentsList");
+    if(appointments.length === 0){
+        appointmentsList.innerHTML = `<div class="no-appointments">${currentLanguage === 'en' ? '📭 No appointments booked yet' : '📭 ఇంకా ఎటువంటి నియామకాలు బుక్ చేయబడలేదు'}</div>`;
+    }else{
+        appointmentsList.innerHTML = [...appointments].reverse().map(apt => `
+        <div class="appointment-card">
+        <h4>🎯 ${apt.service}</h4>
+        <p><strong>${currentLanguage === 'en' ? 'Token:' : 'టోకెన్:'}</strong> <span style="font-weight:bold; color:#ff9800; font-family:'Courier New';">${apt.token}</span></p>
+        <p><strong>${currentLanguage === 'en' ? 'Name:' : 'పేరు:'}</strong> ${apt.name}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Mobile:' : 'మోబైల్:'}</strong> ${apt.mobile}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Date:' : 'తేదీ:'}</strong> ${apt.date}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Time Slot:' : 'సమయ స్లాట్:'}</strong> ${apt.time}</p>
+        <p><strong>${currentLanguage === 'en' ? 'Booked On:' : 'ఇందులో బుక్ చేయబడింది:'}</strong> ${apt.bookedAt}</p>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+            <button class="outline" onclick="cancelAppointment('${apt.token}')">${currentLanguage === 'en' ? '❌ Cancel' : '❌ రద్దు చేయండి'}</button>
+        </div>
+        </div>
+        `).join("");
+    }
+}
+
+function showQueueStatus(){
+homeDiv.style.display="none";
+servicesDiv.style.display="none";
+detailsDiv.style.display="none";
+appointmentsView.style.display="none";
+document.getElementById("queueStatusView").style.display="block";
+updateBackButton();
+
+const userMobileStored = localStorage.getItem('lastBookedMobile');
+const lastBookedService = localStorage.getItem('lastBookedService');
+const userNameStored = localStorage.getItem('lastBookedName');
+const lastBookedToken = localStorage.getItem('lastBookedToken');
+
+const currentServed = parseInt(localStorage.getItem('currentServedCount') || '0', 10) || 0;
+if(document.getElementById('currentServedInput')) document.getElementById('currentServedInput').value = currentServed;
+
+document.getElementById("queueUserName").innerText = userNameStored || '--';
+document.getElementById("queueUserMobile").innerText = userMobileStored || '--';
+document.getElementById("queueUserService").innerText = lastBookedService || '--';
+document.getElementById("queueCurrentToken").innerText = lastBookedToken || '--';
+
+    if(lastBookedToken){
+        const apt = appointments.find(a => a.token === lastBookedToken);
+        if(apt){
+            const pos = apt.position || (appointments.filter(a => a.date === apt.date).findIndex(a=>a.token===apt.token)+1);
+            const totalForDay = appointments.filter(a => a.date === apt.date).length;
+            const peopleAhead = Math.max(0, pos - currentServed - 1);
+            const estimatedMinutes = peopleAhead * 5;
+
+            document.getElementById("queuePosition").innerText = "#" + pos;
+            document.getElementById("peopleAhead").innerText = peopleAhead + (peopleAhead === 1 ? (currentLanguage === 'en' ? " person" : " మనిషి") : (currentLanguage === 'en' ? " people" : " జనాలు"));
+            document.getElementById("estimatedTime").innerText = estimatedMinutes + (currentLanguage === 'en' ? " mins" : " నిమిషాలు");
+            document.getElementById("lastUpdated").innerText = new Date().toLocaleString('en-IN');
+
+            // show total appointments for the token's date in queue-status badge
+            const badge = document.querySelector('.queue-status-badge');
+            if(badge) badge.innerText = (currentLanguage==='en' ? `Total appointments on ${apt.date}: ${totalForDay}` : `ఆ రోజు (${apt.date}) మొత్తం నియామకాలు: ${totalForDay}`);
+            // update small total label
+            const totalLabel = document.getElementById('totalAppointmentsTodayLabel');
+            if(totalLabel) totalLabel.innerText = (currentLanguage==='en' ? `Total today: ${totalForDay}` : `ఈ రోజు మొత్తం: ${totalForDay}`);
+            return;
+        }
+    }
+    // fallback: show totals for today and reset counters
+    const todayStr = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const totalForToday = appointments.filter(a => a.date === todayStr).length;
+    const totalLabel = document.getElementById('totalAppointmentsTodayLabel');
+    if(totalLabel) totalLabel.innerText = (currentLanguage==='en' ? `Total today: ${totalForToday}` : `ఈ రోజు మొత్తం: ${totalForToday}`);
+
+    document.getElementById("queuePosition").innerText = "--";
+    document.getElementById("peopleAhead").innerText = "--";
+    document.getElementById("estimatedTime").innerText = "--";
+    document.getElementById("lastUpdated").innerText = new Date().toLocaleString('en-IN');
+}
+
+function backToServices(){
+showServices();
+}
+
+function selectCitizen(){
+    const role = document.getElementById('roleSelect');
+    if(role) role.style.display = 'none';
+    // show main home content
+    localStorage.setItem('selectedRole','citizen');
+    goHome();
+}
+
+function selectOfficer(){
+    const role = document.getElementById('roleSelect');
+    if(role) role.style.display = 'none';
+    // Check if officer already signed up and verified
+    const savedOfficer = JSON.parse(localStorage.getItem('officer') || 'null');
+    if(savedOfficer && savedOfficer.verified){
+        localStorage.setItem('selectedRole','officer');
+        showOfficerView();
+    } else {
+        showOfficerAuth();
+    }
+}
+
+function backToRoleSelect(){
+    document.getElementById('officerView').style.display = 'none';
+    document.getElementById('roleSelect').style.display = 'flex';
+}
+
+function showOfficerView(){
+    // hide other views
+    homeDiv.style.display='none';
+    servicesDiv.style.display='none';
+    detailsDiv.style.display='none';
+    appointmentsView.style.display='none';
+    document.getElementById('queueStatusView').style.display='none';
+    bookingSection.style.display='none';
+    tokenSection.style.display='none';
+    // populate service select
+    populateOfficerServices();
+    document.getElementById('officerView').style.display = 'block';
+}
+
+function populateOfficerServices(){
+    const sel = document.getElementById('officerServiceSelect');
+    if(!sel) return;
+    sel.innerHTML = Object.keys(servicesData).map(k => `<option value="${k}">${servicesData[k].titleEn}</option>`).join('');
+    // set default date
+    const today = new Date().toISOString().split('T')[0];
+    const dt = document.getElementById('officerDate');
+    if(dt){ dt.value = today; dt.setAttribute('min', today); }
+}
+
+// Officer auth UI and OTP (demo) handlers
+function showOfficerAuth(){
+    document.getElementById('officerAuth').style.display = 'block';
+    document.getElementById('officerView').style.display = 'none';
+    // prefill if stored
+    const saved = JSON.parse(localStorage.getItem('officer') || 'null');
+    if(saved){
+        document.getElementById('officerAuthName').value = saved.name || '';
+        document.getElementById('officerAuthId').value = saved.id || '';
+        document.getElementById('officerAuthMobile').value = saved.mobile || '';
+    }
+}
+
+function hideOfficerAuth(){
+    document.getElementById('officerAuth').style.display = 'none';
+}
+
+let __pendingOtp = null;
+let __pendingOfficer = null;
+
+document.addEventListener('click', function(e){
+    if(e.target && e.target.id === 'officerSendOtp'){
+        officerSendOtp();
+    }
+    if(e.target && e.target.id === 'officerVerifyOtp'){
+        officerVerifyOtp();
+    }
+    if(e.target && e.target.id === 'officerAuthCancel'){
+        hideOfficerAuth();
+        document.getElementById('roleSelect').style.display = 'flex';
+    }
+});
+
+function officerSendOtp(){
+    const name = document.getElementById('officerAuthName').value.trim();
+    const id = document.getElementById('officerAuthId').value.trim();
+    const mobile = document.getElementById('officerAuthMobile').value.trim();
+    if(!name || !id || !mobile || mobile.length !== 10 || isNaN(mobile)){
+        alert(currentLanguage === 'en' ? 'Please enter valid Name, ID and 10-digit Mobile' : 'దయచేసి సరైన పేరు, ID మరియు 10-అంకెల మొబైల్ నమోదు చేయండి');
+        return;
+    }
+    // generate 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    __pendingOtp = otp;
+    __pendingOfficer = { name, id, mobile, role: 'officer' };
+    // demo: show OTP in alert (simulate SMS). Attempt Web OTP API if available.
+    try{
+        // Try Web OTP API (may only work on secure origin and supported browsers)
+        if('OTPCredential' in window && navigator.credentials && navigator.credentials.get){
+            const ac = new AbortController();
+            navigator.credentials.get({otp: {transport:['sms']}, signal: ac.signal, mediation: 'optional'}).then(cred=>{
+                if(cred && cred.code){
+                    document.getElementById('officerOtp').value = cred.code;
+                }
+            }).catch(()=>{});
+            // fallback alert for demo
+        }
+    }catch(e){}
+    alert((currentLanguage==='en' ? 'Demo OTP (SMS not sent): ' : 'డెమో OTP (SMS పంపబడలేదు): ') + otp);
+}
+
+function officerVerifyOtp(){
+    const entered = document.getElementById('officerOtp').value.trim();
+    if(!__pendingOtp || !__pendingOfficer){
+        alert(currentLanguage === 'en' ? 'Please request an OTP first' : 'దయచేసి ముందుగా OTP కోరండి');
+        return;
+    }
+    if(entered === __pendingOtp){
+        const acct = Object.assign({}, __pendingOfficer, { verified: true, verifiedAt: new Date().toISOString() });
+        localStorage.setItem('officer', JSON.stringify(acct));
+        localStorage.setItem('selectedRole','officer');
+        __pendingOtp = null; __pendingOfficer = null;
+        hideOfficerAuth();
+        showOfficerView();
+        alert(currentLanguage === 'en' ? 'Officer verified — access granted' : 'అధికారిని ధృవీకరించాం — ప్రవేశం అనుమతించబడింది');
+    } else {
+        alert(currentLanguage === 'en' ? 'Incorrect OTP' : 'OTP తప్పు');
+    }
+}
+
+function officerGenerateToken(){
+    const key = document.getElementById('officerServiceSelect').value;
+    const name = document.getElementById('officerName').value.trim() || 'Guest';
+    const mobile = document.getElementById('officerMobile').value.trim() || '';
+    const date = document.getElementById('officerDate').value || new Date().toISOString().split('T')[0];
+    const time = document.getElementById('officerTime').value.trim() || 'On demand';
+    // set currentServiceKey so displayToken shows correct service title
+    currentServiceKey = key;
+    // compute formatted date and position
+    const dateObj = new Date(date);
+    const formattedDate = dateObj.toLocaleDateString('en-IN', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+    const position = appointments.filter(a => a.date === formattedDate).length + 1;
+    const token = generateToken(date, name);
+    // display token (this will also store appointment) and include position
+    displayToken(token, name, mobile, date, time, position);
+    // Send token to citizen (simulated) and record the message
+    const serviceName = currentLanguage === 'en' ? servicesData[key].titleEn : servicesData[key].titleTe;
+    if(mobile){
+        sendTokenToCitizen(mobile, token, serviceName, name);
+    }
+}
+
+function cancelAppointment(token){
+    if(!token){
+        alert(currentLanguage==='en' ? 'No token specified for cancellation.' : 'రద్దు చేయడానికి టోకెన్ లేదు.');
+        return;
+    }
+    const idx = appointments.findIndex(a => a.token === token);
+    if(idx === -1){
+        alert(currentLanguage==='en' ? 'Appointment not found.' : 'నియామకం కనబడలేదు.');
+        return;
+    }
+    if(!confirm(currentLanguage==='en' ? 'Are you sure you want to cancel this appointment?' : 'మీరు ఈ నియామకాన్ని రద్దు చేయాలనుకుంటున్నారా?')) return;
+    appointments.splice(idx,1);
+    localStorage.setItem('appointments', JSON.stringify(appointments));
+    // Clear stored last booked if it matches
+    const lastToken = localStorage.getItem('lastBookedToken');
+    if(lastToken === token){
+        localStorage.removeItem('lastBookedToken');
+        localStorage.removeItem('lastBookedMobile');
+        localStorage.removeItem('lastBookedName');
+        localStorage.removeItem('lastBookedService');
+    }
+    // Refresh views
+    showAppointments();
+    showQueueStatus();
+    alert(currentLanguage==='en' ? 'Appointment cancelled.' : 'నియామకం రద్దు చేయబడింది.');
+}
+// Speech recognition for voice commands
+let recognition = null;
+let isListening = false;
+
+function setupSpeechRecognition(){
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SpeechRecognition){
+        // hide mic if unsupported
+        const mic = document.getElementById('micBtn');
+        if(mic) mic.style.display = 'none';
+        return;
+    }
+    recognition = new SpeechRecognition();
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.lang = currentLanguage === 'en' ? 'en-IN' : 'te-IN';
+    recognition.onresult = (e) => {
+        const text = e.results[0][0].transcript.trim();
+        stopListening();
+        handleSpokenCommand(text);
+    };
+    recognition.onerror = (e) => {
+        stopListening();
+        try{ alert((currentLanguage==='en' ? 'Voice recognition error: ' : 'వాయిస్ గుర్తింపు లోపం: ') + (e.error || 'error')); }catch(e){}
+    };
+    recognition.onend = () => {
+        if(isListening) stopListening();
+    };
+}
+
+function toggleMic(){
+    if(!recognition) setupSpeechRecognition();
+    if(!recognition){ alert(currentLanguage==='en' ? 'Voice not supported in this browser' : 'ఈ బ్రౌజర్లో వాయిస్ మద్దతు లేదు'); return; }
+    if(isListening) stopListening(); else startListening();
+}
+
+function startListening(){
+    if(!recognition) return;
+    recognition.lang = currentLanguage === 'en' ? 'en-IN' : 'te-IN';
+    try{ recognition.start(); }catch(e){}
+    isListening = true;
+    const btn = document.getElementById('micBtn');
+    if(btn) btn.classList.add('listening');
+    const label = document.getElementById('micLabel');
+    if(label) label.innerText = currentLanguage === 'en' ? 'Listening...' : 'వింటోంది...';
+}
+
+function stopListening(){
+    if(recognition) try{ recognition.stop(); }catch(e){}
+    isListening = false;
+    const btn = document.getElementById('micBtn');
+    if(btn) btn.classList.remove('listening');
+    const label = document.getElementById('micLabel');
+    if(label) label.innerText = currentLanguage === 'en' ? 'Mic' : 'మైక్';
+}
+function checkAllDocuments(serviceKey){
+    // If a serviceKey is provided and it's not the current view, open its details first
+    if(serviceKey && serviceKey !== currentServiceKey){
+        showDetails(serviceKey);
+        // wait a little for DOM update then check
+        setTimeout(() => {
+            const boxes = document.querySelectorAll('#serviceList input[type="checkbox"]');
+            boxes.forEach(cb => { cb.checked = true; });
+            updateProgress();
+        }, 120);
+        return;
+    }
+    // Otherwise, check all in the current details view
+    const boxes = document.querySelectorAll('#serviceList input[type="checkbox"]');
+    if(boxes.length === 0){
+        // nothing to check
+        alert(currentLanguage === 'en' ? 'No document list visible to check.' : 'తర్వాత చూడడానికి ఏ డాక్యుమెంట్ జాబితా లేదు');
+        return;
+    }
+    boxes.forEach(cb => { cb.checked = true; });
+    updateProgress();
+}
+
+function handleSpokenCommand(text){
+    const t = (text || '').toLowerCase();
+    // role selection by voice (English + Telugu variations)
+    if(t.includes('officer') || t.includes('ఆఫీసర్') || t.includes('నేను అధికార') || t.includes('i am officer') || t.includes('i am an officer') || t.includes('iam officer')){
+        selectOfficer();
+        return;
+    }
+    if(t.includes('citizen') || t.includes('పౌర') || t.includes('నేను పౌర') || t.includes('i am citizen') || t.includes('i am a citizen') || t.includes('iam citizen')){
+        selectCitizen();
+        return;
+    }
+    // booking start (telugu phrase) e.g. "booking prarambhinchandi" or "booking ki vellandi"
+    if(t.includes('prarambhinchandi') || t.includes('ప్రారంభించండి') || t.includes('booking prarambhinchandi') || t.includes('booking ki vellandi') || t.includes('బుకింగ్')){
+        if(detailsDiv.style.display !== 'none'){
+            showBooking();
+            return;
+        }
+    }
+    // check-all commands (English and simple Telugu, including romanized Telugu)
+    if(t.includes('check all') || t.includes('check all documents') || t.includes('select all') || t.includes('select all documents') || t.includes('అన్ని') || t.includes('anni') || (t.includes('document') && t.includes('anni')) || t.includes('documental')){
+        // try to find a service mentioned in the phrase
+        for(const key in servicesData){
+            const en = servicesData[key].titleEn.toLowerCase();
+            const te = servicesData[key].titleTe.toLowerCase();
+            if(t.includes(en) || t.includes(key) || t.includes(te)){
+                checkAllDocuments(key);
+                return;
+            }
+        }
+        // no specific service named — check all for currently open service
+        checkAllDocuments();
+        return;
+    }
+    
+    // name in Telugu: "na peru <name>" or "నా పేరు <name>"
+    if(t.includes('నా పేరు') || t.includes('na peru') || t.includes('naa peru') || t.includes('naaku peru')){
+        // extract text after the phrase
+        let name = t.replace(/.*(నా పేరు|na peru|naa peru|naaku peru)\s*/,'').trim();
+        if(name){
+            // remove common trailing words
+            name = name.replace(/^(is|anu|anu\s)/,'').trim();
+            document.getElementById('userName').value = name.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+            alert((currentLanguage==='en' ? 'Name set to ' : 'పేరు సెట్ అయింది: ') + document.getElementById('userName').value);
+            return;
+        }
+    }
+    // language switching
+    if(t.includes('telugu') || t.includes('తెలుగు')){ if(currentLanguage!=='te') toggleLanguage(); alert('Language set to Telugu'); return; }
+    if(t.includes('english') || t.includes('ఇంగ్లిష్')){ if(currentLanguage!=='en') toggleLanguage(); alert('Language set to English'); return; }
+    // navigation
+    if(t.includes('services') || t.includes('service')){ showServices(); return; }
+    if(t.includes('home') || t.includes('go home') || t.includes('హోమ్')){ goHome(); return; }
+    if(t.includes('appointments') || t.includes('appointment')){ showAppointments(); return; }
+    if(t.includes('queue') || t.includes('queue status') || t.includes('క్యూ')){ showQueueStatus(); return; }
+    // select service by matching titles
+    for(const key in servicesData){
+        const en = servicesData[key].titleEn.toLowerCase();
+        const te = servicesData[key].titleTe.toLowerCase();
+        if(t.includes(en) || t.includes(key) || t.includes(te)){
+            showDetails(key);
+            return;
+        }
+    }
+    // booking flow
+    if(t.includes('book') || t.includes('booking') || t.includes('proceed')){ if(detailsDiv.style.display !== 'none') showBooking(); return; }
+    // select time - try to match available slot text
+    if(t.includes('select time') || /\d{1,2}\s*(am|pm)?/.test(t)){
+        const slots = Array.from(document.querySelectorAll('.time-slot.available'));
+        for(const slot of slots){
+            const stext = slot.innerText.toLowerCase();
+            if(t.includes(stext) || t.includes(stext.replace(':','')) || t.includes(stext.split(' ')[0])){ slot.click(); return; }
+        }
+    }
+    // set name
+    if(t.includes('name')){
+        let name = t.replace(/.*name is /,'').replace(/my name is /,'').replace('name ','').trim();
+        if(name){
+            document.getElementById('userName').value = name.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+            alert((currentLanguage==='en' ? 'Name set to ' : 'పేరు సెట్ అయింది: ') + document.getElementById('userName').value);
+            return;
+        }
+    }
+    // mobile number
+    const digits = t.replace(/[^0-9]/g,'');
+    if(digits.length >= 10){
+        const mobile = digits.slice(-10);
+        document.getElementById('userMobile').value = mobile;
+        alert((currentLanguage==='en' ? 'Mobile set to ' : 'మొబైల్ సెట్ చేయబడింది: ') + mobile);
+        return;
+    }
+    // confirm or token retrieval (telugu 'token pondhandi' or 'token pondandi')
+    if(t.includes('confirm') || t.includes('get token') || t.includes('token pondhandi') || t.includes('token pondandi') || t.includes('టోకెన్')){ 
+        // if token is visible, just alert it, otherwise try to confirm
+        const currentToken = document.getElementById('tokenNumber').innerText;
+        if(currentToken){ alert((currentLanguage==='en' ? 'Your token: ' : 'మీ టోకెన్: ') + currentToken); return; }
+        confirmAppointment(); 
+        return; 
+    }
+    // token spoken in Telugu: 'token pondhandi' or 'token pondandi' -> show token section (uses last booked token)
+    if(t.includes('token pondhandi') || t.includes('token pondandi') || t.includes('టోకెన్ వచ్చింది') || t.includes('token pondh')){
+        // if currently generating token display it; otherwise show queue status which includes token
+        const lastToken = localStorage.getItem('lastBookedToken');
+        if(lastToken){
+            // show token details from last booked
+            const lastName = localStorage.getItem('lastBookedName') || '';
+            const lastMobile = localStorage.getItem('lastBookedMobile') || '';
+            const lastService = localStorage.getItem('lastBookedService') || '';
+            // render token view
+            bookingSection.style.display='none';
+            tokenSection.style.display='block';
+            document.getElementById('tokenNumber').innerText = lastToken;
+            document.getElementById('tokenDetails').innerHTML = `<p><strong>${currentLanguage==='en'?'Service:':'సేవ:'}</strong> ${lastService}</p><p><strong>${currentLanguage==='en'?'Name:':'పేరు:'}</strong> ${lastName}</p><p><strong>${currentLanguage==='en'?'Mobile:':'మొబైల్:'}</strong> ${lastMobile}</p>`;
+            return;
+        } else {
+            alert(currentLanguage==='en' ? 'No token found.' : 'టోకెన్ కనబడలేదు');
+            return;
+        }
+    }
+    // fallback: show what was heard
+    alert((currentLanguage==='en' ? 'Heard: ' : 'వినబడింది: ') + '"' + text + '"');
+}
+
+// Initialize language and speech recognition from localStorage
+window.addEventListener('load', function(){
+    const savedLang = localStorage.getItem('selectedLanguage');
+    if(savedLang){
+        currentLanguage = savedLang;
+        langToggle.innerText = currentLanguage === 'en' ? 'తెలుగు' : 'English';
+    }
+    // set initial mic label
+    const micLabel = document.getElementById('micLabel');
+    if(micLabel) micLabel.innerText = currentLanguage === 'en' ? 'Mic' : 'మైక్';
+    setupSpeechRecognition();
+    // Always show role selection first on load
+    const role = document.getElementById('roleSelect');
+    if(role) role.style.display = 'flex';
+    // hide main views until user selects
+    homeDiv.style.display = 'none';
+    servicesDiv.style.display = 'none';
+    detailsDiv.style.display = 'none';
+    appointmentsView.style.display = 'none';
+    document.getElementById('queueStatusView').style.display = 'none';
+    // prepare officer services list
+    populateOfficerServices();
+});
+
+// Simulated send token to citizen (demo - records in localStorage)
+function sendTokenToCitizen(mobile, token, service, name){
+    if(!mobile) return;
+    const sent = JSON.parse(localStorage.getItem('sentTokens') || '[]');
+    const msg = `Your ${service} token: ${token} for ${name}`;
+    sent.push({to: mobile, token, service, name, message: msg, sentAt: new Date().toLocaleString('en-IN')});
+    localStorage.setItem('sentTokens', JSON.stringify(sent));
+    // simulate SMS send via alert (demo)
+    alert((currentLanguage==='en' ? 'Token sent to ' : 'టోకెన్ పంపబడింది: ') + mobile + '\n' + msg);
+}
+
+function updateQueueCount(){
+    const el = document.getElementById('currentServedInput');
+    const val = el ? (parseInt(el.value||'0',10) || 0) : 0;
+    localStorage.setItem('currentServedCount', val);
+    try{ alert((currentLanguage==='en' ? 'Queue updated. Current served: ' : 'క్యూ నవీకరించబడింది. ప్రస్తుత సేవలు: ') + val); }catch(e){}
+    showQueueStatus();
+}
+</script>
+
+</body>
+</html>
